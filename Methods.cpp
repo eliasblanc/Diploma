@@ -134,47 +134,6 @@ void RK4_S()
 
 		LastSum_S(tk, k1, k2, k3, k4, h);
 
-		double lmtr(1.01);
-		if ((fabs(resM[i].En / (resM[i].En + tk.En)) > lmtr) || (fabs((resM[i].En + tk.En) / resM[i].En) > lmtr))
-		{
-			tk.En = 0;
-		}
-		if ((fabs(resM[i].Pr / (resM[i].Pr + tk.Pr)) > lmtr) || (fabs((resM[i].Pr + tk.Pr) / resM[i].Pr) > lmtr))
-		{
-			tk.Pr = 0;
-		}
-		if ((fabs(resM[i].De / (resM[i].De + tk.De)) > lmtr) || (fabs((resM[i].De + tk.De) / resM[i].De) > lmtr))
-		{
-			tk.De = 0;
-		}
-
-		bool flag = true;
-		Type S = sqrt((temp.x - 0.0806045) * (temp.x - 0.0806045) + temp.y * temp.y + temp.z * temp.z);
-		if (S < 0.07)
-		{
-			flag = false;
-			temp.x = 10; temp.y = temp.z = 0;
-			temp.Vx = temp.Vy = temp.Vz = tVelo * 0.577;
-			temp.De = dencity;
-			temp.En = energy;
-			temp.Pr = pressure;
-			resM[i] = temp;
-			falled++;
-		}
-		if (sqrt(temp.Vx * temp.Vx + temp.Vy * temp.Vy + temp.Vz * temp.Vz) > 100 * tVelo)
-		{
-			flag = false;
-			temp.x = 10; temp.y = temp.z = 0;
-			temp.Vx /= 100;
-			temp.Vy /= 100;
-			temp.Vz /= 100;
-			temp.De = dencity;
-			temp.En = energy;
-			temp.Pr = pressure;
-			resM[i] = temp;
-			spdlim++;
-		}
-
 		if (flag)
 		{
 			MatrPlusVecParall_S(resM, tk, i);
@@ -196,7 +155,7 @@ void RK4_S()
 					}
 				}
 			}
-			double lmtr2(1.02);//1.05
+			double lmtr2(1.02);
 			if ((fabs(resM[i].En / (resM[i].En - L)) > lmtr2) \
 				|| (fabs((resM[i].En - L) / resM[i].En) > lmtr2) || (resM[i].En - L < 0))
 			{
