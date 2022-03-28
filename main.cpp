@@ -4,6 +4,7 @@
 //#include <crtdbg.h>
 //#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
 //#define new DEBUG_NEW
+
 std::ofstream fout;
 
 std::ofstream cool;
@@ -32,18 +33,18 @@ int falled(0);
 int spdlim(0);
 int area(0);
 
-Type m = 18e-21;                          // СИ
-Type dencity = 176549e-19;                // Старый темп
+Type m = 18e-21;                          // Г‘Г€
+Type dencity = 176549e-19;                // Г‘ГІГ Г°Г»Г© ГІГҐГ¬ГЇ
 Type pressure = 315e-19;                  //
 Type energy = 0.00267986;                 //
 
-//Type m = 18e-21;                         // СГС
-//Type dencity = 176549e-19;               // Старый темп
+//Type m = 18e-21;                         // Г‘ГѓГ‘
+//Type dencity = 176549e-19;               // Г‘ГІГ Г°Г»Г© ГІГҐГ¬ГЇ
 //Type pressure = 158e-19;                 //
 //Type energy = 0.00133912;                //
 
-//Type m = 18e-18;                         // СГС
-//Type dencity = 1765e-14;                 // Новый темп
+//Type m = 18e-18;                         // Г‘ГѓГ‘
+//Type dencity = 1765e-14;                 // ГЌГ®ГўГ»Г© ГІГҐГ¬ГЇ
 //Type pressure = 1576e-17;                //
 //Type energy = 0.00133912;                //
 
