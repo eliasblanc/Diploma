@@ -76,8 +76,6 @@ void ReadFile()
 	for (int i = 0; i < 32829; i++)
 	{
 		file >> temp;
-		//printf("D = %e ", exp(temp) / 28223.0);
-		//std::cout << "i = " << i << " temp = " << temp << "\n";
 		if (i % 353 == 0)
 		{
 			//lnD[D_index] = 1e-3 * exp(temp) / 28223.0;
@@ -85,7 +83,6 @@ void ReadFile()
 			++D_index;
 		}
 		file >> temp;
-		//printf(" T = %f ", exp(temp));
 		if (T_index < 353)
 		{
 			//lnT[T_index] = exp(temp) / 3000;
@@ -93,16 +90,8 @@ void ReadFile()
 			++T_index;
 		}
 		file >> temp;
-		//printf(" L = %e ", 10 * exp(temp) / 4.30339);
-		//printf("\n");
-		//lnL[i] = 10 * exp(temp) / (4.30339 * 1e11);
 		lnL[i] = 10 * exp(temp) / (4.30339);
 	}
-
-	/*for (int i = 0; i < 32829; i++)
-	{
-		std::cout << lnL[i] << "\n";
-	}*/
 
 	file.close();
 }
@@ -186,15 +175,6 @@ void RK4_S()
 			spdlim++;
 		}
 
-		// Out of area
-
-		//if (fabs(temp.x) > 0.7 || fabs(temp.y) > 0.7)
-		//{
-		//	flag = false;
-		//	area++;
-		//	//std::cout << "\nArea";
-		//}  
-
 		if (flag)
 		{
 			MatrPlusVecParall_S(resM, tk, i);
@@ -204,29 +184,18 @@ void RK4_S()
 			Type L(0);
 			for (int j = 0; j < 93; j++)
 			{
-				/*printf("resM[i].De = %e", resM[i].De);
-				printf("lnD[j] = %e", lnD[j]);
-				printf("\n");*/
 				if (fabs(lnD[j] - resM[i].De) < epsD)
 				{
 					for (int k = 0; k < 353; k++)
 					{
 						if (fabs(lnT[k] - 168e4 * resM[i].Pr / resM[i].De) < epsT)
 						{
-							/*printf("resM[i].Pr / ... = %f", 168e4 * resM[i].Pr / resM[i].De);
-							printf(" lnT[k] = %f", lnT[k]);
-							printf("\n");*/
 							L = 0.1 * lnL[j * 353 + k];
 							break;
 						}
 					}
 				}
 			}
-
-			/*printf("En = %f", resM[i].En);
-			printf("L = %e", L);
-			printf("\n");*/
-
 			double lmtr2(1.02);//1.05
 			if ((fabs(resM[i].En / (resM[i].En - L)) > lmtr2) \
 				|| (fabs((resM[i].En - L) / resM[i].En) > lmtr2) || (resM[i].En - L < 0))
@@ -234,10 +203,6 @@ void RK4_S()
 				//printf("YES \n");
 				L = 0;
 			}
-			/*else
-			{
-				printf("NO \n");
-			}*/
 			resM[i].En -= L;
 		}
 	}
@@ -249,15 +214,7 @@ void RK4_S()
 
 	int indx(7);
 
-	//cool << resM[indx].En << std::endl;
 	keenetic << (resM[indx].Vx * resM[indx].Vx + resM[indx].Vy * resM[indx].Vy + resM[indx].Vz * resM[indx].Vz) * m / 2 << std::endl;
-
-	/*printf("D = %e\t", resM[indx].De);
-	printf("En = %f\t", resM[indx].En);
-	printf("Pr = %e\t", resM[indx].Pr);
-	printf("T = %f\t", 168e4 * resM[indx].Pr / resM[indx].De);
-	printf("(x, y, z) = (%f, %f, %f)\t", resM[indx].x, resM[indx].y, resM[indx].z);
-	printf("\n");*/
 
 	std::memcpy(M, resM, Nparts * sizeof(model));
 	delete[] resM;
