@@ -48,7 +48,6 @@ extern Type h;
 extern Type PI;
 extern Type Sh;
 extern Type KSTL;
-extern Type KSTL2;
 
 extern int falled;
 extern int spdlim;
