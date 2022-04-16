@@ -4,7 +4,10 @@ import matplotlib.animation as animation
 f = open('royal.txt', 'r')
 tdata = f.readlines()
 
-plt.rcParams["figure.figsize"] = [5, 5]
+c = open('color.txt', 'r')
+cdata = c.readlines()
+
+plt.rcParams["figure.figsize"] = [4, 4]
 plt.rcParams["figure.autolayout"] = True
 
 data = []
@@ -13,7 +16,10 @@ sol = []
 for line in tdata:
 	points = line.split()
 	data.append(points)
-	sol.append('blue')
+
+for line in cdata:
+	points = line.split()
+	sol.append(points[0])
 
 data = [list(map(float, sublist)) for sublist in data]
 
@@ -25,8 +31,8 @@ index = 0
 def animate(i):
 	fig.clear()
 	ax = fig.add_subplot(111, aspect='equal', autoscale_on=False, xlim=(-1, 1), ylim=(-1, 1))
-	ax.set_xlim(-1, 1)
-	ax.set_ylim(-1, 1)
+	#ax.set_xlim(-1, 1)
+	#ax.set_ylim(-1, 1)
 	global index
 	a = i // 10
 	n = (a + 1) * 9
@@ -35,6 +41,6 @@ def animate(i):
 		index += 1
 
 plt.grid(b=None)
-ani = animation.FuncAnimation(fig, animate, interval=30, frames=100)
+ani = animation.FuncAnimation(fig, animate, interval=30, frames=1000)
 
 ani.save('animation.gif', writer='pillow')
