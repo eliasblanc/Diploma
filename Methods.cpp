@@ -72,8 +72,6 @@ void ReadFile()
 	for (int i = 0; i < 32829; i++)
 	{
 		rcf >> temp;
-		//printf("D = %e ", exp(temp) / 28223.0);
-		//std::cout << "i = " << i << " temp = " << temp << "\n";
 		if (i % 353 == 0)
 		{
 			//lnD[D_index] = 1e-3 * exp(temp) / 28223.0;
@@ -81,7 +79,6 @@ void ReadFile()
 			++D_index;
 		}
 		rcf >> temp;
-		//printf(" T = %f ", exp(temp));
 		if (T_index < 353)
 		{
 			//lnT[T_index] = exp(temp) / 3000;
@@ -89,16 +86,8 @@ void ReadFile()
 			++T_index;
 		}
 		rcf >> temp;
-		//printf(" L = %e ", 10 * exp(temp) / 4.30339);
-		//printf("\n");
-		//lnL[i] = 10 * exp(temp) / (4.30339 * 1e11);
 		lnL[i] = 10 * exp(temp) / (4.30339);
 	}
-
-	/*for (int i = 0; i < 32829; i++)
-	{
-		std::cout << lnL[i] << "\n";
-	}*/
 
 	rcf.close();
 }
@@ -159,37 +148,6 @@ void RK4_S()
 
 		LastSum_S(tk, k1, k2, k3, k4, h);
 
-		double lmtr(1.01);
-		if ((fabs(resM[i].De / (resM[i].De + tk.De)) > lmtr) || (fabs((resM[i].De + tk.De) / resM[i].De) > lmtr)) tk.De = 0;
-		if ((fabs(resM[i].En / (resM[i].En + tk.En)) > lmtr) || (fabs((resM[i].En + tk.En) / resM[i].En) > lmtr)) tk.En = 0;
-		if ((fabs(resM[i].Pr / (resM[i].Pr + tk.Pr)) > lmtr) || (fabs((resM[i].Pr + tk.Pr) / resM[i].Pr) > lmtr)) tk.Pr = 0;
-
-		bool flag = true;
-		Type S = sqrt((temp.x - 0.0806045) * (temp.x - 0.0806045) + temp.y * temp.y + temp.z * temp.z);
-		if (S < 0.03) // 0.07
-		{
-			flag = false;
-			falled(temp);
-			resM[i] = temp;
-			Nfall++;
-		}
-		if (sqrt(temp.Vx * temp.Vx + temp.Vy * temp.Vy + temp.Vz * temp.Vz) > 100 * tVelo)
-		{
-			flag = false;
-			speedlim(temp);
-			resM[i] = temp;
-			Nspdlim++;
-		}
-
-		// Out of area
-
-		//if (fabs(temp.x) > 0.7 || fabs(temp.y) > 0.7)
-		//{
-		//	flag = false;
-		//	area++;
-		//	//std::cout << "\nArea";
-		//}  
-
 		if (flag)
 		{
 			MatrPlusVecParall_S(resM, tk, i);
@@ -217,10 +175,6 @@ void RK4_S()
 					}
 				}
 			}
-
-			/*printf("En = %f", resM[i].En);
-			printf("L = %e", L);
-			printf("\n");*/
 
 			double lmtr2(1.02);//1.05
 			if ((fabs(resM[i].En / (resM[i].En - L)) > lmtr2) \
@@ -251,9 +205,6 @@ void RK4_S()
 	}*/
 
 	int indx(7);
-
-	//cool << resM[indx].En << std::endl;
-	//keenetic << (resM[indx].Vx * resM[indx].Vx + resM[indx].Vy * resM[indx].Vy + resM[indx].Vz * resM[indx].Vz) * m / 2 << std::endl;
 
 	// print
 	/*printf("D = %e\t", resM[indx].De);
