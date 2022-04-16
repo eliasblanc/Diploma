@@ -87,7 +87,6 @@ reduction(+:tDe) reduction(+:tEn)
 			r = sqrt(rx * rx + ry * ry + rz * rz);
 
 			Sh = 2 * pow(m / tmp.De, 0.33);
-			//std::cout << Sh << "\n";
 			u = r / Sh;
 
 			H = tmp.Pr / (tmp.De * tmp.De) + M[i].Pr / (M[i].De * M[i].De);
@@ -95,9 +94,7 @@ reduction(+:tDe) reduction(+:tEn)
 			temp = rVx * rx + rVy * ry + rVz * rz;
 			Rab = (tmp.De + M[i].De) / 2;
 			PP = BigP(temp, Rab, r, Sh);
-			//cout << "PP " << PP << endl;
-			//cout << "H  " << H << endl;
-			H += PP;                      //Turn On!!!!!!!
+			H += PP;                      
 
 			W = W2(u, Sh, r);
 
@@ -116,7 +113,6 @@ reduction(+:tDe) reduction(+:tEn)
 			temp = BigM(u);
 			if (r != 0)
 			{
-				////////////////////////Fgrav0 = 1;/////////////////////////KSTLLL
 				Fgx += -Fgrav0 * temp * m * rx / pow(r, 3);
 				Fgy += -Fgrav0 * temp * m * ry / pow(r, 3);
 				Fgz += -Fgrav0 * temp * m * rz / pow(r, 3);
@@ -127,15 +123,11 @@ reduction(+:tDe) reduction(+:tEn)
 
 	//////
 
-	//if (t_model.De < 0) t_model.De *= -1.;
-	//if (t_model.En < 0) t_model.En *= -1.;
 
 	t_model.De = tDe;
 	t_model.En = tEn;
-	t_model.Pr = 0.6666666 * t_model.De * t_model.En;
+	t_model.Pr = 0.666 * t_model.De * t_model.En;
 	//t_model.Pr = t_model.De * t_model.En;
-
-	//std::cout << "DE = " << t_model.De << ";  EN = " << t_model.En << ";  PR = " << t_model.Pr << "\n";
 
 	Type p1, p2;
 	p1 = pow((tmp.x + mu) * (tmp.x + mu) + tmp.y * tmp.y + tmp.z * tmp.z, 1.5);
@@ -147,51 +139,6 @@ reduction(+:tDe) reduction(+:tEn)
 	t_model.Vy = -2 * tmp.Vx + tmp.y - (1 - mu) * tmp.y / p1 - mu * tmp.y / p2;
 	t_model.z = tmp.Vz;
 	t_model.Vz = -4 * PI * PI * (1 - mu) * tmp.z / p1 - 4 * PI * PI * mu * tmp.z / p2;
-
-	//if (tmp.x < -0.45) printf("\ntVx = %f, Fgrav_x = %f, Fx = %f", t_model.Vx, Fgx, Fx);
-	//if ((tmp.x > -0.45) && (tmp.x < -0.3)) printf("\ntVx = %f, Fgrav_x = %f, Fx = %f", t_model.Vx, Fgx, Fx);
-	//if ((tmp.x > -0.3) && (tmp.x < 0)) printf("\ntVx = %f, Fgrav_x = %f, Fx = %f", t_model.Vx, Fgx, Fx);
-	//if (t_model.x > -0.5) printf("\ntVx = %f, Fgrav_x = %f, Fx = %f", t_model.Vx, Fgx, Fx);// cout << "\n tVx = " << tVx << "\n Fgrav_x = " << Fgx;
-	//if (SPHsize % 10 == 0) printf("\ntVx = %f, Fgrav_x = %f, Fx = %f", t_model.Vx, Fgx, Fx);
-	//printf("\ntVx = %f, Fx = %f", t_model.Vx, Fx);
-	//printf("\ntVx = %f, Fgrav_x = %f", t_model.Vx, Fgx);
-	//printf("\ntEn = %f, Pr = %e, De = %e", t_model.En, t_model.Pr, t_model.De);
-	/*if ((Fx > KSTL * t_model.Vx) || (Fx < -KSTL * t_model.Vx)) Fx = 0;
-	if ((Fy > KSTL * t_model.Vy) || (Fy < -KSTL * t_model.Vy)) Fy = 0;
-	if ((Fz > KSTL * t_model.Vz) || (Fz < -KSTL * t_model.Vz)) Fz = 0;*/
-	/*
-	if (tmp.x >= -0.3)
-	{
-		if (((Fgx > KSTL2 * t_model.Vx) || (Fgx < -KSTL2 * t_model.Vx) || \
-			 (Fgy > KSTL2 * t_model.Vy) || (Fgy < -KSTL2 * t_model.Vy) || \
-			 (Fgz > KSTL2 * t_model.Vz) || (Fgz < -KSTL2 * t_model.Vz))) Fgx = Fgy = Fgz = 0;
-	}
-	else
-	{
-		if (((fabs(Fgx - t_model.Vx) > KSTL2newW) || \
-			 (fabs(Fgy - t_model.Vy) > KSTL2newW) || \
-			 (fabs(Fgz - t_model.Vz) > KSTL2newW)) && (tmp.x < -0.5)) Fgx = Fgy = Fgz = 0;
-
-		if (((fabs(Fgx - t_model.Vx) > KSTL2new) || \
-			 (fabs(Fgy - t_model.Vy) > KSTL2new) || \
-			 (fabs(Fgz - t_model.Vz) > KSTL2new))) Fgx = Fgy = Fgz = 0;
-	}
-	*/
-	/*if ((Fx > KSTL * t_model.Vx) || (Fx < -KSTL * t_model.Vx)) Fx = sign(Fx) * 0.2 * fabs(t_model.Vx);
-	if ((Fy > KSTL * t_model.Vy) || (Fy < -KSTL * t_model.Vy)) Fy = sign(Fy) * 0.2 * fabs(t_model.Vy);
-	if ((Fz > KSTL * t_model.Vz) || (Fz < -KSTL * t_model.Vz)) Fz = sign(Fz) * 0.2 * fabs(t_model.Vz);*/
-	/*if (Fx * Fx > KSTL * t_model.Vx * t_model.Vx) Fx = sign(Fx) * 0.2 * fabs(t_model.Vx);
-	if (Fy * Fy > KSTL * t_model.Vy * t_model.Vy) Fy = sign(Fy) * 0.2 * fabs(t_model.Vy);
-	if (Fz * Fz > KSTL * t_model.Vz * t_model.Vz) Fz = sign(Fz) * 0.2 * fabs(t_model.Vz);*/
-
-
-	if (fabs(Fx) > KSTL * fabs(t_model.Vx)) Fx = sign(Fx) * 0.1 * fabs(t_model.Vx);
-	if (fabs(Fy) > KSTL * fabs(t_model.Vy)) Fy = sign(Fy) * 0.1 * fabs(t_model.Vy);
-	if (fabs(Fz) > KSTL * fabs(t_model.Vz)) Fz = sign(Fz) * 0.1 * fabs(t_model.Vz);
-
-	if (fabs(Fgx) > KSTL2 * fabs(t_model.Vx)) Fgx = 0; // Fgx = sign(Fgx) * 0.2 * fabs(t_model.Vx);
-	if (fabs(Fgy) > KSTL2 * fabs(t_model.Vy)) Fgy = 0; //Fgy = sign(Fgy) * 0.2 * fabs(t_model.Vy);
-	if (fabs(Fgz) > KSTL2 * fabs(t_model.Vz)) Fgz = 0; //Fgz = sign(Fgz) * 0.2 * fabs(t_model.Vz);
 
 	t_model.Vx += Fx;
 	t_model.Vy += Fy;
