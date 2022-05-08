@@ -124,18 +124,16 @@ void SPH(model& res, model vec, int index)
 
 	////
 
-
-
-	if (fabs(Fx) > KSTL * fabs(t_model.Vx)) Fx = 0;//sign(Fx) * 0.1 * fabs(t_model.Vx);
-	if (fabs(Fy) > KSTL * fabs(t_model.Vy)) Fy = 0;//sign(Fy) * 0.1 * fabs(t_model.Vy);
-	if (fabs(Fz) > KSTL * fabs(t_model.Vz)) Fz = 0;//sign(Fz) * 0.1 * fabs(t_model.Vz);
+	if (fabs(Fx) > KSTL * fabs(t_model.Vx)) Fx = 0; //sign(Fx) * 0.1 * fabs(t_model.Vx);
+	if (fabs(Fy) > KSTL * fabs(t_model.Vy)) Fy = 0; //sign(Fy) * 0.1 * fabs(t_model.Vy);
+	if (fabs(Fz) > KSTL * fabs(t_model.Vz)) Fz = 0; //sign(Fz) * 0.1 * fabs(t_model.Vz);
 
 	if (fabs(Fgx) > KSTL2 * fabs(t_model.Vx)) Fgx = 0; //Fgx = sign(Fgx) * 0.2 * fabs(t_model.Vx);
 	if (fabs(Fgy) > KSTL2 * fabs(t_model.Vy)) Fgy = 0; //Fgy = sign(Fgy) * 0.2 * fabs(t_model.Vy);
 	if (fabs(Fgz) > KSTL2 * fabs(t_model.Vz)) Fgz = 0; //Fgz = sign(Fgz) * 0.2 * fabs(t_model.Vz);
 
 	t_model.Vx += Fx;
-  t_model.Vy += Fy;
+        t_model.Vy += Fy;
 	t_model.Vz += Fz;
 
 	t_model.Vx += Fgx;
