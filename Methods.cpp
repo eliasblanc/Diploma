@@ -47,33 +47,24 @@ void ReadFile()
 	for (int i = 0; i < 32829; i++)
 	{
 		rcf >> temp;
-		//printf("D = %e ", exp(temp) / 28223.0);
-		//std::cout << "i = " << i << " temp = " << temp << "\n";
 		if (i % 353 == 0)
 		{
-			//lnD[D_index] = 1e-3 * exp(temp) / 28223.0;
+			
 			lnD[D_index] = exp(temp) / 28223.0;
 			++D_index;
 		}
+		
 		rcf >> temp;
-		//printf(" T = %f ", exp(temp));
 		if (T_index < 353)
 		{
 			//lnT[T_index] = exp(temp) / 3000;
 			lnT[T_index] = exp(temp);
 			++T_index;
 		}
+		
 		rcf >> temp;
-		//printf(" L = %e ", 10 * exp(temp) / 4.30339);
-		//printf("\n");
-		//lnL[i] = 10 * exp(temp) / (4.30339 * 1e11);
 		lnL[i] = 10 * exp(temp) / (4.30339);
 	}
-
-	/*for (int i = 0; i < 32829; i++)
-	{
-		std::cout << lnL[i] << "\n";
-	}*/
 
 	rcf.close();
 }
